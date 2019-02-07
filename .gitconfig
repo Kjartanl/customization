@@ -1,0 +1,11 @@
+[user]
+	name = Kjartan Sæle Lerøy
+	email = 
+[alias]
+	stat = status
+	co = checkout
+	lg = log --format=\"%h:%<|(30) %an: %s\" -6
+[core]
+	editor = vim
+[winUpdater]
+	recentlySeenVersion = 2.20.1.windows.1
