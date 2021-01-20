@@ -1,0 +1,21 @@
+[user]
+	name = Your Name Here
+	email = your.name@your.provider.xyz
+[alias]
+	# Status: Long version with more details
+	# stat = "!f(){ git config --get remote.origin.url && git status; };f"
+	#
+	# Status: Shorter version 
+	stat = status
+
+	# Nicer formatted logging output (2 lines each) with only the last 10 commits
+	lg = log --format=\"%h: %Cgreen%an %ar %Creset(%ci) %n          %s\" -10
+
+	# Similar to the previous, but more compact, and on only one line
+	lgi = log --format=\"%h: %Cgreen%an %ar %Cred% | %Creset %s\" -10
+
+	# Other short commands
+	co = checkout
+	brl = branch --list
+[core]
+	editor = vim
