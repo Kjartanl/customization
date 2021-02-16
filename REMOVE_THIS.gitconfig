@@ -16,6 +16,6 @@
 
 	# Other short commands
 	co = checkout
-	brl = branch --list
+	brl = branch --list -v
 [core]
 	editor = vim
