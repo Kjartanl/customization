@@ -61,3 +61,17 @@ clg(){
         git lg
     fi
 }
+
+# Call powershell script which in turn enables
+# system-wide proxy settings (environment 
+# variables for the User scope):
+proxy-on(){
+    powershell /c/users/<username>/proxy-on.ps1
+}
+
+# Call powershell script which in turn disables
+# system-wide proxy settings (environment 
+# variables for the User scope):
+proxy-off(){
+    powershell /c/users/<username>/proxy-off.ps1
+}
