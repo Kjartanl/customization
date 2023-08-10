@@ -23,6 +23,7 @@ lst(){
     echo -e "\033[32mcdiff\033[0m: Clear screen, git diff"
     echo -e "\033[32mcstat\033[0m: Clear screen, git stat"
     echo -e "\033[32mclg\033[0m: Clear screen, git log"
+    echo -e "\033[32mprev\033[0m: Save current branch name in local var '\$prev'".
     echo -e "\033[32mproxy-on\033[0m"
     echo -e "\033[32mproxy-off\033[0m"
     echo -e "\033[32mcleardns\033[0m"
@@ -105,6 +106,12 @@ clg(){
     else
         git lg
     fi
+}
+
+# Store the name of the current git branch in the local 
+# variable "prev" (so it will be available as $prev).
+prev(){
+        prev=$(cstat| grep -o "On branch.*" | sed 's/On branch //g')
 }
 
 # Call powershell script which in turn enables
