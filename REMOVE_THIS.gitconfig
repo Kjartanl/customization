@@ -12,11 +12,14 @@
 	lg = log --format=\"%h: %Cgreen%an %ar %Creset(%ci) %n          %s\" -10
 
 	# Similar to the previous, but more compact, and on only one line
-	lgi = log --format=\"%h: %Cgreen%an %ar %Cred% | %Creset %s\" -10
+	lgi = log --format=\"%h: %<(19)%Cgreen%an %<(15,trunc)%ar %Cred% | %Creset %s\" -10
 
 	# Other short commands
 	co = checkout
 	cob = checkout -b
-	brl = branch --list -v
+	brl = for-each-ref --sort=-committerdate --format=\"%(objectname:short): %(color:green)%(align:width=19)%(authorname)%(end) %(align:width=15)%(committerdate:relative)%(end) %(color:red)| %(color:white)%(align:width=30)%(refname:short)%(end) \"  refs/heads/
 [core]
 	editor = vim
+	fsmonitor = true
+[http]
+	sslVerify = true

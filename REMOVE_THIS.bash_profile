@@ -32,7 +32,7 @@ lst(){
     echo -e "\033[32mclearlogs\033[0m: Delete all logs except those in the archive directory"
     echo -e "\033[32mdevtools\033[0m: Run Ice Dev Tools from the command line "
     echo -e "\033[32mazrt\033[0m: Run Azurite Start from /c/azurite/"
-    echo -e "\033[32mazfunc\033[0m: Activate Py VEnv, Run Ice Az.functions from the command line."
+    echo -e "\033[32mazfunc [pip]\033[0m: Activate Py VEnv, Run Ice Az.functions from the command line (optionally running pip install first)"
 }
 
 # Create custom command "repos" which changes 
@@ -102,9 +102,9 @@ cstat(){
 clg(){
     clear
     if [ "$1" ]; then
-    	git lg "${1}"
+    	git lgi "${1}"
     else
-        git lg
+        git lgi
     fi
 }
 
@@ -210,8 +210,16 @@ azrt(){
 # Start a Python virtual environment, and run a project:
 azfunc(){
     cd /c/appl/ioc-ice-azfunctions
-    ./.venv/Scripts/python -m pip install -r requirements_dev.txt
-    source /venv/Scripts/activate 
+    if  [ "$1" ]; then
+        if [ "$1" = "pip" ]; then
+            echo "Running pip install before AZFunctions..."
+            ./.venv/Scripts/python -m pip install -r requirements_dev.txt
+        else
+            echo "Use 'azfunc pip' to run pip install"
+        fi
+    fi
+
+    source .venv/Scripts/activate 
     func host start
 }
 
