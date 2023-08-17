@@ -1,10 +1,8 @@
 # Verify that the two .bash_profile files (in c:/users and /f/) 
-# are identical. This is usefull when profiles may be loaded from
-# remote directories, depending on network connections and the 
-# availability of certain drives (here, F:\):
+# are identical:
 echo "------------------"
-echo -e "\033[32mVerifying that two profile files are identical..\033[0m"
-profilestatus=$(diff /c/Users/<username>/.bash_profile /f/.bash_profile)
+echo -e "\033[32mVerifying that the two profile files are identical..\033[0m"
+profilestatus=$(diff /c/Users/KJLER/.bash_profile /f/.bash_profile)
 if [ "$profilestatus" ]; then
 echo "--------------------------------------------------------------"
     echo -e "\033[33mWARNING! DIFFERENCES BETWEEN PROFILE FILES: \033[0m"
@@ -31,8 +29,8 @@ lst(){
     echo -e "\033[32mdaylogs [X]\033[0m: List log files changed today, or up to X days ago"
     echo -e "\033[32marchlogs\033[0m: Move all logs into the archive directory"
     echo -e "\033[32mclearlogs\033[0m: Delete all logs except those in the archive directory"
-    echo -e "\033[32mdevtools\033[0m: Run Ice Dev Tools from the command line "
-    echo -e "\033[32mazrt\033[0m: Run Azurite Start from /c/azurite/"
+    echo -e "\033[32mdevtools\033[0m: Run Ice Dev Tools from the command line"
+    echo -e "\033[32mazrt\033[0m: Run Azurite Start from /c/azurite/" 
     echo -e "\033[32mazfunc [pip]\033[0m: Activate Py VEnv, Run Ice Az.functions from the command line (optionally running pip install first)"
 }
 
@@ -48,7 +46,7 @@ reload(){
 # the directory for any projects found under 
 # (in this case) "c:/Projects".
 repos(){
-    dir=c:/Projects
+    dir=c:/appl
     if [ "$1" ]; then
       cd "${dir}/${1}"
     else
@@ -57,7 +55,7 @@ repos(){
 }
 
 ice(){
-    dir=c:/Projects/ioc-ice
+    dir=c:/appl/ioc-ice
     if [ "$1" ]; then
       cd "${dir}/${1}"
     else
@@ -124,35 +122,24 @@ prev(){
 # system-wide proxy settings (environment 
 # variables for the User scope):
 proxy-on(){
-    powershell /c/users/<username>/proxy-on.ps1
+    powershell /c/users/kjler/proxy-on.ps1
 }
 
 # Call powershell script which in turn disables
 # system-wide proxy settings (environment 
 # variables for the User scope):
 proxy-off(){
-    powershell /c/users/<username>/proxy-off.ps1
+    powershell /c/users/kjler/proxy-off.ps1
 }
 
-# Runs a powershell process as root (in this case, script that 
-# clears my DNS IP-configurations. The powershell script itself 
-# is available as a separate file in this repo too).
 cleardns(){
-	powershell -Command "Start-Process 'powershell' -ArgumentList 'c:\Users\<username>\clear-dns.ps1' -Verb RunAs"
+	powershell -Command "Start-Process 'powershell' -ArgumentList 'c:\Users\KJLER\clear-dns.ps1' -Verb RunAs"
 }
 
 # Get logs from today (default), or logs from
 # X number of days ago by looking up all log 
-# files from /c/logs/* (including subdirectories!)
-# with filenames that start with the date. 
-# This assumes log files have names starting 
-# with: "yyyy-mm-ddd..". 
-# 
-# EXAMPLES: Two logs from 10 AM and 1 pm on august 15:
-# (Hours are shown here, but do not affect the 
-# result of this function)
-# c:\logs\SomeApplication\2023-08-15-11.log
-# c:\logs\OtherService\2023-08-15-13.log
+# files from /c/logs/ with filenames that 
+# start with the date.
 daylogs(){
     if [ "$1" ]; then
       desired_date=$(date -d "$1 days ago" -I)
@@ -164,13 +151,7 @@ daylogs(){
     find -name "$desired_date*" 
 }
 
-# Move all (non-archived) log files into an archive-directory
-# EXAMPLE: 
-# c:\logs\SomeApplication\2023-08-15-11.log
-# c:\logs\OtherService\2023-08-15-13.log
-# WOULD BE MOVED INTO:
-# c:\logs\archive\<todays-date-current-time>\SomeApplication\2023-08-15-11.log
-# c:\logs\archive\<todays-date-current-time>\OtherService\2023-08-15-13.log
+# Move all log files into the archive-directory
 archlogs(){
     log_dir="/c/logs"
     arch_dir_name="archive"
@@ -199,21 +180,16 @@ clearlogs(){
     echo "Cleared all non-archived logs in /c/logs/"
 }
 
-# Run a project from the command line (save time and resources 
-# by not haveing to start e.g. Visual Studio)
 devtools(){
      cd /c/appl/icedevtools/IceDevTools
     dotnet run
 }
 
-# Start Azurite, the locally run Azure Storage emulator.
 azrt(){
     cd /c/azurite
     eval "azurite start"
 }
 
-
-# Start a Python virtual environment, and run a project:
 azfunc(){
     cd /c/appl/ioc-ice-azfunctions
     if  [ "$1" ]; then
