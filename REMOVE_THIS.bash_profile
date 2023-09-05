@@ -3,17 +3,24 @@
 # remote directories, depending on network connections and the 
 # availability of certain drives (here, F:\):
 echo "------------------"
-echo -e "\033[32mVerifying that two profile files are identical..\033[0m"
-profilestatus=$(diff /c/Users/<username>/.bash_profile /f/.bash_profile)
-if [ "$profilestatus" ]; then
-echo "--------------------------------------------------------------"
-    echo -e "\033[33mWARNING! DIFFERENCES BETWEEN PROFILE FILES: \033[0m"
-echo "--------------------------------------------------------------"
-    echo -e "\033[31m${profilestatus}\033[0m"
-echo "--------------------------------------------------------------"
+echo -e "\033[32mVerifying that the two profile files are identical..\033[0m"
+
+if [ ! -r /f/.bash_profile ]; then
+    echo "--------------------------------------------------------------"
+    echo -e "\033[33mThe F:/ profile is not currently reachable.\033[0m"
+    echo "--------------------------------------------------------------"
 else
-    echo -e "\033[32mAll good! Carrying on...\033[0m"
-echo "------------------"
+    profilestatus=$(diff /c/Users/<username>/.bash_profile /f/.bash_profile)
+    if [ "$profilestatus" ]; then
+        echo "--------------------------------------------------------------"
+        echo -e "\033[33mWARNING! DIFFERENCES BETWEEN PROFILE FILES: \033[0m"
+        echo "--------------------------------------------------------------"
+        echo -e "\033[31m${profilestatus}\033[0m"
+        echo "--------------------------------------------------------------"
+    else
+        echo -e "\033[32mAll good, carry on.\033[0m"
+        echo "------------------"
+    fi
 fi
 
 # List the commands available here
