@@ -1,5 +1,6 @@
 # Verify that the two .bash_profile files (in c:/users and /f/) 
 # are identical:
+#
 echo "------------------"
 echo -e "\033[32mVerifying that the two profile files are identical..\033[0m"
 profilestatus=$(diff /c/Users/KJLER/.bash_profile /f/.bash_profile)
