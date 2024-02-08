@@ -50,18 +50,32 @@ reload(){
 
 # Create custom command "repos" which changes 
 # the current directory to the value of "dir". 
-# Accepts one parameter, which should be a subdirectory
-# found under "dir". Used to navigate quickly into 
+# Accepts one parameter, which should be either a 
+# subdirectory found under "dir", or a hard-coded
+# string identifying some specific directory (the 
+# example uses single character parameters, but this
+# could be longer). Used to navigate quickly into 
 # the directory for any projects found under 
-# (in this case) "c:/Projects".
+# (in this case) "c:/dev".
 repos(){
-    dir=c:/Projects
+    dir=c:/dev
     if [ "$1" ]; then
-      cd "${dir}/${1}"
+        if [[ "$1" == "s" ]]; then
+	    cd "${dir}/something/something-else"
+        elif [[ "$1" == "w" ]]; then
+	    cd "${dir}/other-repo"
+        elif [[ "$1" == "c" ]]; then
+	    cd "${dir}/customization"
+	else
+            cd "${dir}/${1}"
+	fi
     else
       cd "${dir}"
     fi
 }
+
+
+
 
 ice(){
     dir=c:/Projects/ioc-ice
