@@ -17,7 +17,7 @@
 	# Other short commands
 	co = checkout
 	cob = checkout -b
-	brl = for-each-ref --sort=-committerdate --format=\"%(objectname:short): %(color:green)%(align:width=19)%(authorname)%(end) %(align:width=15)%(committerdate:relative)%(end) %(color:red)| %(color:white)%(align:width=30)%(refname:short)%(end) \"  refs/
+	brl = for-each-ref --sort=-committerdate --format=\"%(objectname:short): %(color:green)%(align:width=19)%(authorname)%(end) %(align:width=15)%(committerdate:relative)%(end) %(color:red)| %(color:white)%(align:width=30)%(refname:short)%(end) \"  refs/heads
 [core]
 	editor = vim
 	fsmonitor = true
